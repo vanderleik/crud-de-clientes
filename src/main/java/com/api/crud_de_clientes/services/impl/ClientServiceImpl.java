@@ -16,7 +16,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientResponseDTO getClientById(Long id) {
+    public ClientResponseDTO retrieveClientById(Long id) {
         Client clientReturned = clientRepository.findById(id).orElseThrow();
 
         return convertToClientResponseDTO(clientReturned);

@@ -19,8 +19,8 @@ public class ClientController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ClientResponseDTO> getClientById(@PathVariable Long id) {
-        ClientResponseDTO clientResponseDTO = clientService.getClientById(id);
+    public ResponseEntity<ClientResponseDTO> retrieveClientById(@PathVariable Long id) {
+        ClientResponseDTO clientResponseDTO = clientService.retrieveClientById(id);
         return ResponseEntity.ok().body(clientResponseDTO);
     }
 

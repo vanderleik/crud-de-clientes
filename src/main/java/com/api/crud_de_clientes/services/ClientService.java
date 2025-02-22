@@ -4,6 +4,6 @@ import com.api.crud_de_clientes.dtos.ClientResponseDTO;
 
 public interface ClientService {
 
-    ClientResponseDTO getClientById(Long id);
+    ClientResponseDTO retrieveClientById(Long id);
 
 }
