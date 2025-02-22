@@ -5,7 +5,9 @@ import com.api.crud_de_clientes.dtos.ClientResponseDTO;
 import com.api.crud_de_clientes.services.ClientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -21,7 +23,10 @@ public class ClientController {
     @PostMapping
     public ResponseEntity<ClientResponseDTO> createClient(@RequestBody ClientRequestDTO clientRequestDTO) {
         ClientResponseDTO clientResponseDTO = clientService.createClient(clientRequestDTO);
-        return ResponseEntity.ok().body(clientResponseDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
+                .buildAndExpand(clientResponseDTO.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(clientResponseDTO);
     }
 
     @GetMapping("/{id}")
