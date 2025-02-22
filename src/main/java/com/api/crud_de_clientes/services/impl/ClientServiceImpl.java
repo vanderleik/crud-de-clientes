@@ -5,6 +5,7 @@ import com.api.crud_de_clientes.entities.Client;
 import com.api.crud_de_clientes.repositories.ClientRepository;
 import com.api.crud_de_clientes.services.ClientService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -15,6 +16,7 @@ public class ClientServiceImpl implements ClientService {
         this.clientRepository = clientRepository;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public ClientResponseDTO retrieveClientById(Long id) {
         Client clientReturned = clientRepository.findById(id).orElseThrow();
