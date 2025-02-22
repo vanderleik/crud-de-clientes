@@ -43,6 +43,24 @@ public class ClientServiceImpl implements ClientService {
         return clientList.stream().map(this::convertToClientResponseDTO).toList();
     }
 
+    @Transactional
+    @Override
+    public ClientResponseDTO updateClient(Long id, ClientRequestDTO clientRequestDTO) {
+        Client clientReturned = clientRepository.findById(id).orElseThrow();
+        updateClientReturned(clientRequestDTO, clientReturned);
+
+        Client clientSaved = clientRepository.save(clientReturned);
+        return convertToClientResponseDTO(clientSaved);
+    }
+
+    private static void updateClientReturned(ClientRequestDTO clientRequestDTO, Client clientReturned) {
+        clientReturned.setName(clientRequestDTO.getName() != null ? clientRequestDTO.getName() : clientReturned.getName());
+        clientReturned.setCpf(clientRequestDTO.getCpf() != null ? clientRequestDTO.getCpf() : clientReturned.getCpf());
+        clientReturned.setIncome(clientRequestDTO.getIncome() != null ? clientRequestDTO.getIncome() : clientReturned.getIncome());
+        clientReturned.setBirthDate(clientRequestDTO.getBirthDate() != null ? clientRequestDTO.getBirthDate() : clientReturned.getBirthDate());
+        clientReturned.setChildren(clientRequestDTO.getChildren() != null ? clientRequestDTO.getChildren() : clientReturned.getChildren());
+    }
+
 
     private ClientResponseDTO convertToClientResponseDTO(Client clientReturned) {
         return new ClientResponseDTO(

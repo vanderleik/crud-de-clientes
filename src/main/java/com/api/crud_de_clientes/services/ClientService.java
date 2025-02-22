@@ -13,4 +13,6 @@ public interface ClientService {
 
     ClientResponseDTO createClient(ClientRequestDTO clientRequestDTO);
 
+    ClientResponseDTO updateClient(Long id, ClientRequestDTO clientRequestDTO);
+
 }
