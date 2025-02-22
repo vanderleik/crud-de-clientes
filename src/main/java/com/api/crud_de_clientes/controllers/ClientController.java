@@ -3,12 +3,13 @@ package com.api.crud_de_clientes.controllers;
 import com.api.crud_de_clientes.dtos.ClientRequestDTO;
 import com.api.crud_de_clientes.dtos.ClientResponseDTO;
 import com.api.crud_de_clientes.services.ClientService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/clients")
@@ -36,8 +37,8 @@ public class ClientController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ClientResponseDTO>> listAllClients() {
-        List<ClientResponseDTO> clientResponseDTOList = clientService.listAllClients();
+    public ResponseEntity<Page<ClientResponseDTO>> listAllClients(Pageable pageable) {
+        Page<ClientResponseDTO> clientResponseDTOList = clientService.listAllClients(pageable);
         return ResponseEntity.ok().body(clientResponseDTOList);
     }
 

@@ -5,10 +5,10 @@ import com.api.crud_de_clientes.dtos.ClientResponseDTO;
 import com.api.crud_de_clientes.entities.Client;
 import com.api.crud_de_clientes.repositories.ClientRepository;
 import com.api.crud_de_clientes.services.ClientService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -38,9 +38,9 @@ public class ClientServiceImpl implements ClientService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<ClientResponseDTO> listAllClients() {
-        List<Client> clientList = clientRepository.findAll();
-        return clientList.stream().map(this::convertToClientResponseDTO).toList();
+    public Page<ClientResponseDTO> listAllClients(Pageable pageable) {
+        Page<Client> clientList = clientRepository.findAll(pageable);
+        return clientList.map(this::convertToClientResponseDTO);
     }
 
     @Transactional
