@@ -53,6 +53,12 @@ public class ClientServiceImpl implements ClientService {
         return convertToClientResponseDTO(clientSaved);
     }
 
+    @Transactional
+    @Override
+    public void deleteClient(Long id) {
+        clientRepository.deleteById(id);
+    }
+
     private static void updateClientReturned(ClientRequestDTO clientRequestDTO, Client clientReturned) {
         clientReturned.setName(clientRequestDTO.getName() != null ? clientRequestDTO.getName() : clientReturned.getName());
         clientReturned.setCpf(clientRequestDTO.getCpf() != null ? clientRequestDTO.getCpf() : clientReturned.getCpf());
