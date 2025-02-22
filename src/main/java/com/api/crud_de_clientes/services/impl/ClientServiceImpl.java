@@ -1,5 +1,6 @@
 package com.api.crud_de_clientes.services.impl;
 
+import com.api.crud_de_clientes.dtos.ClientRequestDTO;
 import com.api.crud_de_clientes.dtos.ClientResponseDTO;
 import com.api.crud_de_clientes.entities.Client;
 import com.api.crud_de_clientes.repositories.ClientRepository;
@@ -18,6 +19,15 @@ public class ClientServiceImpl implements ClientService {
         this.clientRepository = clientRepository;
     }
 
+    @Transactional
+    @Override
+    public ClientResponseDTO createClient(ClientRequestDTO clientRequestDTO) {
+        Client newClient = convertToClient(clientRequestDTO);
+        Client clientSaved = clientRepository.save(newClient);
+
+        return convertToClientResponseDTO(clientSaved);
+    }
+
     @Transactional(readOnly = true)
     @Override
     public ClientResponseDTO retrieveClientById(Long id) {
@@ -26,11 +36,13 @@ public class ClientServiceImpl implements ClientService {
         return convertToClientResponseDTO(clientReturned);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<ClientResponseDTO> listAllClients() {
         List<Client> clientList = clientRepository.findAll();
         return clientList.stream().map(this::convertToClientResponseDTO).toList();
     }
+
 
     private ClientResponseDTO convertToClientResponseDTO(Client clientReturned) {
         return new ClientResponseDTO(
@@ -41,6 +53,16 @@ public class ClientServiceImpl implements ClientService {
                 clientReturned.getBirthDate(),
                 clientReturned.getChildren()
         );
+    }
+
+    private Client convertToClient(ClientRequestDTO clientRequestDTO) {
+        Client newClient = new Client();
+        newClient.setName(clientRequestDTO.getName());
+        newClient.setCpf(clientRequestDTO.getCpf());
+        newClient.setIncome(clientRequestDTO.getIncome());
+        newClient.setBirthDate(clientRequestDTO.getBirthDate());
+        newClient.setChildren(clientRequestDTO.getChildren());
+        return newClient;
     }
 
 }

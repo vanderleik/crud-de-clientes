@@ -1,12 +1,10 @@
 package com.api.crud_de_clientes.controllers;
 
+import com.api.crud_de_clientes.dtos.ClientRequestDTO;
 import com.api.crud_de_clientes.dtos.ClientResponseDTO;
 import com.api.crud_de_clientes.services.ClientService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,6 +16,12 @@ public class ClientController {
 
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
+    }
+
+    @PostMapping
+    public ResponseEntity<ClientResponseDTO> createClient(@RequestBody ClientRequestDTO clientRequestDTO) {
+        ClientResponseDTO clientResponseDTO = clientService.createClient(clientRequestDTO);
+        return ResponseEntity.ok().body(clientResponseDTO);
     }
 
     @GetMapping("/{id}")
