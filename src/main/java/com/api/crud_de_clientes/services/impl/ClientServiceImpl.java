@@ -7,6 +7,8 @@ import com.api.crud_de_clientes.services.ClientService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class ClientServiceImpl implements ClientService {
 
@@ -22,6 +24,12 @@ public class ClientServiceImpl implements ClientService {
         Client clientReturned = clientRepository.findById(id).orElseThrow();
 
         return convertToClientResponseDTO(clientReturned);
+    }
+
+    @Override
+    public List<ClientResponseDTO> listAllClients() {
+        List<Client> clientList = clientRepository.findAll();
+        return clientList.stream().map(this::convertToClientResponseDTO).toList();
     }
 
     private ClientResponseDTO convertToClientResponseDTO(Client clientReturned) {

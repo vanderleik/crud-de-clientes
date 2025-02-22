@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/clients")
 public class ClientController {
@@ -22,6 +24,12 @@ public class ClientController {
     public ResponseEntity<ClientResponseDTO> retrieveClientById(@PathVariable Long id) {
         ClientResponseDTO clientResponseDTO = clientService.retrieveClientById(id);
         return ResponseEntity.ok().body(clientResponseDTO);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ClientResponseDTO>> listAllClients() {
+        List<ClientResponseDTO> clientResponseDTOList = clientService.listAllClients();
+        return ResponseEntity.ok().body(clientResponseDTOList);
     }
 
 }
