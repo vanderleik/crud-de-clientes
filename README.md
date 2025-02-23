@@ -10,7 +10,7 @@
 Trata-se de uma aplicação Spring Boot, que utiliza banco de dados em memória H2 e implementa um CRUD(L) de clientes.</p>
 
 <p>A lista de nomes pré configurada no projeto se refere aos personagens e atores/atrizes da série The Office. Os CPFs 
-foram gerados de forma aleatória utilizando o Microsoft Excel através da fórmula</p>:
+foram gerados de forma aleatória utilizando o Microsoft Excel através da fórmula:</p>
 ```bash
 =SEERRO(TEXTO(ALEATÓRIOENTRE(0;999);"000")&"."&TEXTO(ALEATÓRIOENTRE(0;999);"000")&"."&TEXTO(ALEATÓRIOENTRE(0;999);"000")&"-00";"erro")
 ```
