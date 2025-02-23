@@ -1,6 +1,7 @@
 package com.api.crud_de_clientes.services;
 
 import com.api.crud_de_clientes.dtos.ClientRequestDTO;
+import com.api.crud_de_clientes.dtos.ClientRequestToUpdateDTO;
 import com.api.crud_de_clientes.dtos.ClientResponseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +14,7 @@ public interface ClientService {
 
     ClientResponseDTO createClient(ClientRequestDTO clientRequestDTO);
 
-    ClientResponseDTO updateClient(Long id, ClientRequestDTO clientRequestDTO);
+    ClientResponseDTO updateClient(Long id, ClientRequestToUpdateDTO clientRequestDTO);
 
     void deleteClient(Long id);
 

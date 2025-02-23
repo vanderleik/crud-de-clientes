@@ -1,8 +1,6 @@
 package com.api.crud_de_clientes.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PastOrPresent;
 
 import java.time.LocalDate;
 
@@ -14,14 +12,12 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Campo obrigatório")
     private String name;
 
     private String cpf;
 
     private Double income;
 
-    @PastOrPresent(message = "A data de nascimento não pode ser futura")
     @Column(name = "birth_date")
     private LocalDate birthDate;
 

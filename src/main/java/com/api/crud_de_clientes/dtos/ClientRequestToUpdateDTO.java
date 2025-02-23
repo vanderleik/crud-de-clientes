@@ -1,13 +1,11 @@
 package com.api.crud_de_clientes.dtos;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 
 import java.time.LocalDate;
 
-public class ClientRequestDTO {
+public class ClientRequestToUpdateDTO {
 
-    @NotBlank(message = "Campo obrigatório")
     private String name;
 
     private String cpf;
@@ -19,10 +17,10 @@ public class ClientRequestDTO {
 
     private Integer children;
 
-    public ClientRequestDTO() {
+    public ClientRequestToUpdateDTO() {
     }
 
-    public ClientRequestDTO(String name, String cpf, Double income, LocalDate birthDate, Integer children) {
+    public ClientRequestToUpdateDTO(String name, String cpf, Double income, LocalDate birthDate, Integer children) {
         this.name = name;
         this.cpf = cpf;
         this.income = income;

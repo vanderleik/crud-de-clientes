@@ -1,8 +1,10 @@
 package com.api.crud_de_clientes.controllers;
 
 import com.api.crud_de_clientes.dtos.ClientRequestDTO;
+import com.api.crud_de_clientes.dtos.ClientRequestToUpdateDTO;
 import com.api.crud_de_clientes.dtos.ClientResponseDTO;
 import com.api.crud_de_clientes.services.ClientService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,7 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<ClientResponseDTO> createClient(@RequestBody ClientRequestDTO clientRequestDTO) {
+    public ResponseEntity<ClientResponseDTO> createClient(@Valid @RequestBody ClientRequestDTO clientRequestDTO) {
         ClientResponseDTO clientResponseDTO = clientService.createClient(clientRequestDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
                 .buildAndExpand(clientResponseDTO.getId()).toUri();
@@ -43,7 +45,7 @@ public class ClientController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClientResponseDTO> updateClient(@PathVariable Long id, @RequestBody ClientRequestDTO clientRequestDTO) {
+    public ResponseEntity<ClientResponseDTO> updateClient(@PathVariable Long id, @Valid @RequestBody ClientRequestToUpdateDTO clientRequestDTO) {
         ClientResponseDTO clientResponseDTO = clientService.updateClient(id, clientRequestDTO);
         return ResponseEntity.ok().body(clientResponseDTO);
     }

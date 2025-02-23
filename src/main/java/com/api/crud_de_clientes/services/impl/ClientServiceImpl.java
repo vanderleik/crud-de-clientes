@@ -1,6 +1,7 @@
 package com.api.crud_de_clientes.services.impl;
 
 import com.api.crud_de_clientes.dtos.ClientRequestDTO;
+import com.api.crud_de_clientes.dtos.ClientRequestToUpdateDTO;
 import com.api.crud_de_clientes.dtos.ClientResponseDTO;
 import com.api.crud_de_clientes.entities.Client;
 import com.api.crud_de_clientes.repositories.ClientRepository;
@@ -48,7 +49,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Transactional
     @Override
-    public ClientResponseDTO updateClient(Long id, ClientRequestDTO clientRequestDTO) {
+    public ClientResponseDTO updateClient(Long id, ClientRequestToUpdateDTO clientRequestDTO) {
         try {
             Client clientReturned = clientRepository.getReferenceById(id);
             updateClientReturned(clientRequestDTO, clientReturned);
@@ -70,7 +71,7 @@ public class ClientServiceImpl implements ClientService {
             clientRepository.deleteById(id);
     }
 
-    private static void updateClientReturned(ClientRequestDTO clientRequestDTO, Client clientReturned) {
+    private static void updateClientReturned(ClientRequestToUpdateDTO clientRequestDTO, Client clientReturned) {
         clientReturned.setName(clientRequestDTO.getName() != null ? clientRequestDTO.getName() : clientReturned.getName());
         clientReturned.setCpf(clientRequestDTO.getCpf() != null ? clientRequestDTO.getCpf() : clientReturned.getCpf());
         clientReturned.setIncome(clientRequestDTO.getIncome() != null ? clientRequestDTO.getIncome() : clientReturned.getIncome());
