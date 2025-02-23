@@ -5,6 +5,8 @@ import com.api.crud_de_clientes.dtos.ClientResponseDTO;
 import com.api.crud_de_clientes.entities.Client;
 import com.api.crud_de_clientes.repositories.ClientRepository;
 import com.api.crud_de_clientes.services.ClientService;
+import com.api.crud_de_clientes.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,7 +33,8 @@ public class ClientServiceImpl implements ClientService {
     @Transactional(readOnly = true)
     @Override
     public ClientResponseDTO retrieveClientById(Long id) {
-        Client clientReturned = clientRepository.findById(id).orElseThrow();
+        Client clientReturned = clientRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
 
         return convertToClientResponseDTO(clientReturned);
     }
@@ -46,17 +49,25 @@ public class ClientServiceImpl implements ClientService {
     @Transactional
     @Override
     public ClientResponseDTO updateClient(Long id, ClientRequestDTO clientRequestDTO) {
-        Client clientReturned = clientRepository.findById(id).orElseThrow();
-        updateClientReturned(clientRequestDTO, clientReturned);
+        try {
+            Client clientReturned = clientRepository.getReferenceById(id);
+            updateClientReturned(clientRequestDTO, clientReturned);
 
-        Client clientSaved = clientRepository.save(clientReturned);
-        return convertToClientResponseDTO(clientSaved);
+            Client clientSaved = clientRepository.save(clientReturned);
+            return convertToClientResponseDTO(clientSaved);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Cliente não encontrado");
+        }
     }
 
     @Transactional
     @Override
     public void deleteClient(Long id) {
-        clientRepository.deleteById(id);
+        if (!clientRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Cliente não encontrado");
+        }
+
+            clientRepository.deleteById(id);
     }
 
     private static void updateClientReturned(ClientRequestDTO clientRequestDTO, Client clientReturned) {
